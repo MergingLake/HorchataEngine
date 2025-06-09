@@ -2,33 +2,59 @@
 #include <Prerequisites.h>
 #include "Window.h"
 
-class BaseApp 
-{
+/**
+ * @class BaseApp
+ * @brief Main application class that controls the lifecycle of the program.
+ *
+ * Handles initialization, frame updates, rendering, and cleanup. It owns the
+ * main window and other graphical elements needed for the application.
+ */
+class 
+  BaseApp {
 public:
-	BaseApp() = default;
-	~BaseApp();
+  /**
+   * @brief Default constructor.
+   */
+  BaseApp() = default;
 
-	//Función encargada de ejecutar la aplicación en main
-	int
-		run();
+  /**
+   * @brief Destructor.
+   */
+  ~BaseApp();
 
-	//Función de inicialización
-	bool
-		init();
+  /**
+   * @brief Runs the main application loop.
+   * @return Application exit status code.
+   */
+  int
+    run();
 
-	//Función que se actualiza por frame
-	void
-		update();
+  /**
+   * @brief Initializes the application resources and window.
+   * @return True if initialization is successful, false otherwise.
+   */
+  bool
+    init();
 
-	//Función de renderizado
-	void
-		render();
+  /**
+   * @brief Updates the application logic on each frame.
+   */
+  void
+    update();
 
-	void
-		destroy();
+  /**
+   * @brief Renders the current frame to the screen.
+   */
+  void
+    render();
+
+  /**
+   * @brief Cleans up and releases resources before exiting.
+   */
+  void
+    destroy();
 
 private:
-	Window* m_window;
-	//sf::RenderWindow* m_window;
-	sf::CircleShape* m_circle;
+  Window* m_window;  /**< Pointer to the application window wrapper. */
+  sf::CircleShape* m_circle; /**< Pointer to the circle shape for rendering.  */
 };
