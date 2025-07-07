@@ -23,7 +23,7 @@ public:
    * @param shapeType Type of the shape to create.
    */
   CShape(ShapeType shapeType) :
-    m_shape(nullptr),
+    m_shapePtr(nullptr),
     m_shapeType(ShapeType::EMPTY) {}
 
   /**
@@ -36,8 +36,8 @@ public:
    * @param shapeType The type of shape to create.
    * @return Pointer to the created shape.
    */
-  sf::Shape*
-    createShape(ShapeType shapeType);
+  void
+		createShape(ShapeType type);
 
   /**
    * @brief Updates the shape state.
@@ -51,7 +51,7 @@ public:
    * @param window The window where the shape is rendered.
    */
   void
-    render(Window& window);
+    render(const EngineUtilities::TSharedPointer<Window>& window);
 
   /**
    * @brief Sets the position of the shape.
@@ -89,17 +89,9 @@ public:
   void
     setScale(const sf::Vector2f& scl);
 
-  /**
-   * @brief Gets the shape pointer.
-   * @return Pointer to the internal sf::Shape.
-   */
-  sf::Shape*
-    getShape() {
-    return m_shape;
-  }
-
 private:
-  sf::Shape* m_shape;  /**< Pointer to the SFML shape.*/
+	EngineUtilities::TSharedPointer<sf::Shape> m_shapePtr; /**< Shared pointer to the SFML shape. */
+  //sf::Shape* m_shape;  /**< Pointer to the SFML shape.*/
   ShapeType m_shapeType;  /**< Type of the shape.*/
   sf::VertexArray* m_line;  /**< Optional line representation (if any).*/
 };

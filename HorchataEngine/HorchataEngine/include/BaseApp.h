@@ -1,6 +1,7 @@
 #pragma once
 #include <Prerequisites.h>
 #include "Window.h"
+#include "CShape.h"
 
 /**
  * @class BaseApp
@@ -55,6 +56,8 @@ public:
     destroy();
 
 private:
-  Window* m_window;  /**< Pointer to the application window wrapper. */
-  sf::CircleShape* m_circle; /**< Pointer to the circle shape for rendering.  */
+	EngineUtilities::TSharedPointer<Window> m_windowPtr;
+	EngineUtilities::TSharedPointer<CShape> m_shapePtr; /**< Pointer to the shape component for rendering. */
+  //Window* m_window;  /**< Pointer to the application window wrapper. */
+  //sf::CircleShape* m_circle; /**< Pointer to the circle shape for rendering.  */
 };

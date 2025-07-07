@@ -70,5 +70,7 @@ public:
     destroy();
 
 private:
-  sf::RenderWindow* m_window; /**< Pointer to the SFML RenderWindow. */
+	EngineUtilities::TUniquePtr<sf::RenderWindow> m_windowPtr; /**< Unique pointer to the SFML RenderWindow. */
+  //sf::RenderWindow* m_window; /**< Pointer to the SFML RenderWindow. */
+	sf::View m_view; /**< View for rendering, can be used for camera control. */
 };
