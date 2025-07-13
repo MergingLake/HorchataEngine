@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cmath>
-#include <iostream>
 
 class 
 	CVector2 {
@@ -78,14 +77,12 @@ public:
 		if (index == 0) return x;
 		if (index == 1) return y;
 
-		std::cerr << "Warning: CVector2 index out of range!" << std::endl;
 		return x; // Default return to avoid undefined behavior
 	}
 
 	const float& operator[](int index) const {
 		if (index == 0) return x;
 		if (index == 1) return y;
-		std::cerr << "Warning: CVector2 const index out of range!" << std::endl;
 		return x; // Default return to avoid undefined behavior
 	}
 
@@ -131,10 +128,6 @@ public:
 	static const CVector2 Zero;
 
 	static const CVector2 One;
-
-	void print() const {
-		std::cout << "CVector2(" << x << ", " << y << ")" << std::endl;
-	}
 };
 
 const CVector2 CVector2::Zero(0.0f, 0.0f);
