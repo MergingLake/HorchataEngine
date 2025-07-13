@@ -1,5 +1,6 @@
 #pragma once
 #include "Prerequisites.h"
+#include "ECS\Component.h"
 
 class Window;
 
@@ -11,7 +12,7 @@ class Window;
  * modifying their position, color, rotation, and scale.
  */
 class 
-  CShape {
+  CShape : public Component {
 public:
   /**
    * @brief Default constructor.
@@ -22,13 +23,14 @@ public:
    * @brief Constructor with shape type.
    * @param shapeType Type of the shape to create.
    */
-  CShape(ShapeType shapeType) :
-    m_shapePtr(nullptr),
-    m_shapeType(ShapeType::EMPTY) {}
+  CShape(ShapeType shapeType) : m_shapePtr(nullptr),
+                                m_shapeType(ShapeType::EMPTY),
+                                Component(ComponentType::SHAPE) { }
 
   /**
    * @brief Default destructor.
    */
+  virtual
   ~CShape() = default;
 
   /**
@@ -37,21 +39,27 @@ public:
    * @return Pointer to the created shape.
    */
   void
-		createShape(ShapeType type);
+		createShape(ShapeType shapeType);
+
+	void 
+    beginplay() override;
 
   /**
    * @brief Updates the shape state.
    * @param deltaTime Time elapsed since last update.
    */
   void
-    update(float deltaTime);
+    update(float deltaTime) override;
 
   /**
    * @brief Renders the shape to the given window.
    * @param window The window where the shape is rendered.
    */
   void
-    render(const EngineUtilities::TSharedPointer<Window>& window);
+    render(const EngineUtilities::TSharedPointer<Window>& window) override;
+
+	void 
+    destroy() override;
 
   /**
    * @brief Sets the position of the shape.

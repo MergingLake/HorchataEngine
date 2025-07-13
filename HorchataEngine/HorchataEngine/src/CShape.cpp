@@ -54,6 +54,16 @@ CShape::createShape(ShapeType type) {
   //return m_shapePtr.get();
 }
 
+void 
+CShape::beginplay() {
+
+}
+
+void
+CShape::update(float deltaTime) {
+
+}
+
 void
 CShape::render(const EngineUtilities::TSharedPointer<Window>& window) {
   if (m_shapePtr) {
@@ -62,10 +72,21 @@ CShape::render(const EngineUtilities::TSharedPointer<Window>& window) {
 }
 
 void
+CShape::destroy() {
+  
+}
+
+void
 CShape::setPosition(float x, float y) {
   if (m_shapePtr) m_shapePtr->setPosition(x, y);
   else ERROR("CShape", "setPosition", "Shape no inicializado");
   }
+
+void
+CShape::setPosition(const sf::Vector2f& position) {
+  if (m_shapePtr) m_shapePtr->setPosition(position);
+  else ERROR("CShape", "setPosition", "Shape no inicializado");
+}
 
 void
 CShape::setFillColor(const sf::Color& color) {

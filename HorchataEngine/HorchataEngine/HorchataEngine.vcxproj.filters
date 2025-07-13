@@ -13,8 +13,17 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ECS">
+      <UniqueIdentifier>{000d9ea2-a498-4bf6-b07c-de703aa103d0}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Memory">
       <UniqueIdentifier>{50711181-295b-4ff8-aaca-804ffcfc09ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de recursos\ECS">
+      <UniqueIdentifier>{ef0dbe2a-e633-4dca-8d8b-1286f5e20f86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities">
+      <UniqueIdentifier>{fcd73df6-618a-494d-ab7b-686505e83ddd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -45,6 +54,21 @@
     <ClInclude Include="include\Memory\TWeakPointer.h">
       <Filter>Memory</Filter>
     </ClInclude>
+    <ClInclude Include="include\ECS\Component.h">
+      <Filter>ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\Entity.h">
+      <Filter>ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\Actor.h">
+      <Filter>ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\Transform.h">
+      <Filter>ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utilities\CVector2.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -58,6 +82,9 @@
     </ClCompile>
     <ClCompile Include="src\CShape.cpp">
       <Filter>Archivos de recursos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ECS\Actor.cpp">
+      <Filter>Archivos de recursos\ECS</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
