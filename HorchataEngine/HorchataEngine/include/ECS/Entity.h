@@ -41,12 +41,21 @@ public:
 	virtual void
 		destroy() = 0; // Pure virtual function for cleanup
 
+	/**
+	* @brief Adds a component to the entity.
+	* @param component The component to add.
+	*/
 	template <typename T>
-	void addComponent(EngineUtilities::TSharedPointer<T> component) {
+	void 
+		addComponent(EngineUtilities::TSharedPointer<T> component) {
 		static_assert(std::is_base_of<Component, T>::value, "T must be derived from Component");
 		components.push_back(component.template dynamic_pointer_cast<Component>());
 	}
 
+	/**
+	* @brief Gets a component of the specified type from the entity.
+	* @return A shared pointer to the component, or an empty pointer if not found.
+	*/
 	template <typename T>
 	EngineUtilities::TSharedPointer<T> 
 	getComponent() {
@@ -61,7 +70,16 @@ public:
 	}
 
 protected:
+	/**
+	 * @brief Indicates whether the entity is active.
+	 */
 	bool isActive;
+	/**
+	 * @brief Unique identifier for the entity.
+	 */
 	uint32_t id;
+	/**
+	 * @brief List of components associated with the entity.
+	 */
 	std::vector<EngineUtilities::TSharedPointer<Component>> components;
 };

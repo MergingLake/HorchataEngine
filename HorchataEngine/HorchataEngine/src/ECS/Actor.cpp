@@ -1,6 +1,7 @@
 #include "ECS/Actor.h"
 
-Actor::Actor(const std::string& actorName) {
+Actor::Actor
+(const std::string& actorName) {
 	m_name = actorName;
 
 	EngineUtilities::TSharedPointer<CShape> shape = EngineUtilities::MakeShared<CShape>();
