@@ -21,6 +21,15 @@
 #include "Memory/TWeakPointer.h"
 #include "Memory/TStaticPtr.h"
 #include "Memory/TUniquePtr.h"
+#include "Utilities/Utilities/EngineMath.h"
+#include "Utilities/Vectors/Quaternion.h"
+#include "Utilities/Vectors/Vector2.h"
+#include "Utilities/Vectors/Vector3.h"
+#include "Utilities/Vectors/Vector4.h"
+#include "Utilities/Matrix/Matrix2x2.h"
+#include "Utilities/Matrix/Matrix3x3.h"
+#include "Utilities/Matrix/Matrix4x4.h"
+
 
 // ============================================================================
 // Macros

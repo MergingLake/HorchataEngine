@@ -182,7 +182,14 @@
     <ClInclude Include="include\Memory\TUniquePtr.h" />
     <ClInclude Include="include\Memory\TWeakPointer.h" />
     <ClInclude Include="include\Prerequisites.h" />
-    <ClInclude Include="include\Utilities\CVector2.h" />
+    <ClInclude Include="include\Utilities\Matrix\Matrix2x2.h" />
+    <ClInclude Include="include\Utilities\Matrix\Matrix3x3.h" />
+    <ClInclude Include="include\Utilities\Matrix\Matrix4x4.h" />
+    <ClInclude Include="include\Utilities\Utilities\EngineMath.h" />
+    <ClInclude Include="include\Utilities\Vectors\Quaternion.h" />
+    <ClInclude Include="include\Utilities\Vectors\Vector2.h" />
+    <ClInclude Include="include\Utilities\Vectors\Vector3.h" />
+    <ClInclude Include="include\Utilities\Vectors\Vector4.h" />
     <ClInclude Include="include\Window.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

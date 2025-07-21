@@ -1,5 +1,6 @@
 #include "CShape.h"
 #include "Window.h"
+#include "ECS/Texture.h"
 
 void
 CShape::createShape(ShapeType type) {
@@ -83,8 +84,8 @@ CShape::setPosition(float x, float y) {
   }
 
 void
-CShape::setPosition(const sf::Vector2f& position) {
-  if (m_shapePtr) m_shapePtr->setPosition(position);
+CShape::setPosition(const EngineMath::Vector2& position) {
+  if (m_shapePtr) m_shapePtr->setPosition(position.x, position.y);
   else ERROR("CShape", "setPosition", "Shape no inicializado");
 }
 
@@ -101,7 +102,14 @@ CShape::setRotation(float angle) {
 }
 
 void
-CShape::setScale(const sf::Vector2f& scale) {
-  if (m_shapePtr) m_shapePtr->setScale(scale);
+CShape::setScale(const EngineMath::Vector2& scale) {
+  if (m_shapePtr) m_shapePtr->setScale(scale.x, scale.y);
   else ERROR("CShape", "setScale", "Shape no inicializado");
+}
+
+void
+CShape::setTexture(const EngineUtilities::TSharedPointer<Texture>& texture) {
+  if (!texture.isNull()) {
+    m_shapePtr->setTexture(&texture->getTexture());
+  }
 }

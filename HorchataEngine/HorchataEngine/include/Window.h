@@ -63,6 +63,12 @@ public:
   void
     display();
 
+	/**
+   * @brief Updates the window (polls events, updates state, etc.).
+  */
+  void
+    update();
+
   /**
    * @brief Destroys the window and releases allocated resources.
    */
@@ -73,4 +79,7 @@ private:
 	EngineUtilities::TUniquePtr<sf::RenderWindow> m_windowPtr; /**< Unique pointer to the SFML RenderWindow. */
   //sf::RenderWindow* m_window; /**< Pointer to the SFML RenderWindow. */
 	sf::View m_view; /**< View for rendering, can be used for camera control. */
+public:
+	sf::Time deltaTime; /**< Time elapsed since the last frame, useful for frame rate independent updates. */
+	sf::Clock clock; /**< Clock to measure time between frames. */
 };

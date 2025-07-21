@@ -73,6 +73,11 @@ Window::display() {
 }
 
 void
+Window::update() {
+	deltaTime = clock.restart(); // Reiniciar el reloj y obtener el tiempo transcurrido
+}
+
+void
 Window::destroy() {
   m_windowPtr.release();
   //SAFE_PTR_RELEASE(m_window);

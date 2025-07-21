@@ -3,6 +3,7 @@
 #include "ECS\Component.h"
 
 class Window;
+class Texture;
 
 /**
  * @class CShape
@@ -74,7 +75,7 @@ public:
    * @param position A vector specifying the position.
    */
   void
-    setPosition(const sf::Vector2f& position);
+    setPosition(const EngineMath::Vector2& position);
 
   /**
    * @brief Sets the fill color of the shape.
@@ -95,7 +96,10 @@ public:
    * @param scl The scale vector to apply.
    */
   void
-    setScale(const sf::Vector2f& scl);
+    setScale(const EngineMath::Vector2& scl);
+
+  void
+    setTexture(const EngineUtilities::TSharedPointer<Texture>& texture);
 
 private:
 	EngineUtilities::TSharedPointer<sf::Shape> m_shapePtr; /**< Shared pointer to the SFML shape. */

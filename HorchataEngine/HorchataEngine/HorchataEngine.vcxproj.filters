@@ -25,6 +25,15 @@
     <Filter Include="Utilities">
       <UniqueIdentifier>{fcd73df6-618a-494d-ab7b-686505e83ddd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utilities\Utilities">
+      <UniqueIdentifier>{5e4462e3-719b-474e-a72d-21267112c73e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\Vectors">
+      <UniqueIdentifier>{cff629e9-d60f-4844-aad4-6c85b73cab58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\Matrix">
+      <UniqueIdentifier>{0783a59d-e23d-4181-a5f4-b8d14997effa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -66,8 +75,29 @@
     <ClInclude Include="include\ECS\Transform.h">
       <Filter>ECS</Filter>
     </ClInclude>
-    <ClInclude Include="include\Utilities\CVector2.h">
-      <Filter>Utilities</Filter>
+    <ClInclude Include="include\Utilities\Matrix\Matrix2x2.h">
+      <Filter>Utilities\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utilities\Matrix\Matrix3x3.h">
+      <Filter>Utilities\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utilities\Matrix\Matrix4x4.h">
+      <Filter>Utilities\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utilities\Vectors\Quaternion.h">
+      <Filter>Utilities\Vectors</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utilities\Vectors\Vector2.h">
+      <Filter>Utilities\Vectors</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utilities\Vectors\Vector3.h">
+      <Filter>Utilities\Vectors</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utilities\Vectors\Vector4.h">
+      <Filter>Utilities\Vectors</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utilities\Utilities\EngineMath.h">
+      <Filter>Utilities\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -52,6 +52,9 @@ public:
 	void
 	destroy() override {};
 
+	void
+		setTexture(const EngineUtilities::TSharedPointer<Texture>& texture);
+
 	/**
 	 * @brief Adds a component to the actor.
 	 * @param component The component to add.

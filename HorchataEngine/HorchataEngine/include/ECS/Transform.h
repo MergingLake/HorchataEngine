@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "../Prerequisites.h"
+#include "Window.h"
 
 class
 	Transform : public Component {
@@ -44,12 +45,27 @@ public:
 	void
 		destroy() {}
 
+	void
+		seek(const EngineMath::Vector2& targetPosition,
+				 float speed,
+				 float deltaTime,
+				 float range) {
+			// Implement seeking behavior towards the target position
+			EngineMath::Vector2 direction = targetPosition - m_position;
+			float length = EngineMath::sqrt(direction.x * direction.x + direction.y * direction.y);
+
+			if (length > range) {
+				direction /= length;
+				m_position += direction * speed * deltaTime;
+			}
+		}
+
 	/**
 	* @brief Sets the position of the transform.
 	* @param position The new position.
 	*/
 	void
-	setPosition(const sf::Vector2f& position) {
+	setPosition(const EngineMath::Vector2& position) {
 			m_position = position;
 	}
 
@@ -57,7 +73,7 @@ public:
 	* @brief Gets the position of the transform.
 	* @return The current position.
 	*/
-	sf::Vector2f&
+	EngineMath::Vector2&
 	getPosition() {
 			return m_position;
 	}
@@ -85,7 +101,7 @@ public:
 	 * @param scale The new scale factor.
 	 */
 	void
-		setScale(const sf::Vector2f& scale) {
+		setScale(const EngineMath::Vector2& scale) {
 			m_scale = scale;
 	}
 
@@ -93,14 +109,14 @@ public:
 	 * @brief Gets the scale of the transform.
 	 * @return The current scale factor.
 	 */
-	sf::Vector2f&
+	EngineMath::Vector2&
 		getScale() {
 			return m_scale;
 	}
 
 private:
 	  /**< Position of the transform. */
-		sf::Vector2f m_position; /**< Position of the transform. */
+		EngineMath::Vector2 m_position; /**< Position of the transform. */
 		float m_rotation; /**< Rotation angle in degrees. */
-		sf::Vector2f m_scale; /**< Scale factor for the transform. */
+		EngineMath::Vector2 m_scale; /**< Scale factor for the transform. */
 };
