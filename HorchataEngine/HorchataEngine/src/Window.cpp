@@ -1,10 +1,13 @@
 #include <window.h>
 
 Window::Window(int width, int height, const std::string& title) {
-  // Inicializar la ventana
-	m_windowPtr = EngineUtilities::MakeUnique<sf::RenderWindow>(
-		sf::VideoMode(width, height), title);
-    //m_window = new sf::RenderWindow(sf::VideoMode(width, height), title);
+	// Create a new SFML RenderWindow with the specified dimensions and title
+  m_windowPtr = EngineUtilities::MakeUnique<sf::RenderWindow>(
+    sf::VideoMode({ static_cast<unsigned int>(width),
+    static_cast<unsigned int>(height) }),
+    title,
+    sf::Style::Default
+  );
 
   if (!m_windowPtr.isNull()) {
     m_windowPtr->setFramerateLimit(60);  // Limitar a 60 fps
@@ -13,21 +16,28 @@ Window::Window(int width, int height, const std::string& title) {
   else {
     ERROR("Window", "Window", "Failed to create window");
   }
+
+	ImGui::SFML::Init(*m_windowPtr); // Initialize ImGui with the window
 }
 
 Window::~Window() {
+  ImGui::SFML::Shutdown(); // Shutdown ImGui before destroying the window
+	// Release the unique pointer to the window
 	m_windowPtr.release();
   //SAFE_PTR_RELEASE(m_window);
 }
 
 void
 Window::handleEvents() {
-  sf::Event event;
-  while (m_windowPtr->pollEvent(event)) {
-    // Cerrar la ventana si el usuario lo indica
-    if (event.type == sf::Event::Closed) {
-      m_windowPtr->close();
-    }
+  //while (m_windowPtr->isOpen())
+  //{
+  //}
+	// Process events in the window
+  while (const std::optional event = m_windowPtr->pollEvent()) {
+    ImGui::SFML::ProcessEvent(*m_windowPtr, *event);
+    // Close window: exit
+    if (event->is<sf::Event::Closed>())
+			m_windowPtr->close();
   }
 }
 
@@ -74,11 +84,20 @@ Window::display() {
 
 void
 Window::update() {
-	deltaTime = clock.restart(); // Reiniciar el reloj y obtener el tiempo transcurrido
+	deltaTime = clock.restart(); // Restart the clock and get the elapsed time
+  
+	// Use these deltaTime to update ImGui
+  ImGui::SFML::Update(*m_windowPtr, deltaTime);
+}
+
+void
+Window::render() {
+	ImGui::SFML::Render(*m_windowPtr); // Render ImGui draw data
 }
 
 void
 Window::destroy() {
+	ImGui::SFML::Shutdown(); // Shutdown ImGui before destroying the window
   m_windowPtr.release();
   //SAFE_PTR_RELEASE(m_window);
 }

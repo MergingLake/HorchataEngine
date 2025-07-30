@@ -21,10 +21,10 @@ public:
 		beginplay() override {};
 
 	void 
-		update(float deltaTime) override;
+		update(float deltaTime) override {};
 
 	void 
-		render(const EngineUtilities::TSharedPointer<Window>& window) override;
+		render(const EngineUtilities::TSharedPointer<Window>& window) override {};
 
 	void 
 		destroy() override {};

@@ -60,6 +60,7 @@ private:
 	EngineUtilities::TSharedPointer<Window> m_windowPtr;
 
 	EngineUtilities::TSharedPointer<Actor> m_ACircle; /**< Pointer to the actor component for managing entities. */
+	EngineUtilities::TSharedPointer<Actor> m_ATrack; /**< Pointer to the circle shape component for rendering. */
   //Window* m_window;  /**< Pointer to the application window wrapper. */
   //sf::CircleShape* m_circle; /**< Pointer to the circle shape for rendering.  */
 

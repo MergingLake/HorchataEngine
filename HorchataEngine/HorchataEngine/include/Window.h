@@ -69,6 +69,9 @@ public:
   void
     update();
 
+  void
+		render();
+
   /**
    * @brief Destroys the window and releases allocated resources.
    */
