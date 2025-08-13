@@ -53,7 +53,11 @@ public:
 	destroy() override {};
 
 	void
-		setTexture(const EngineUtilities::TSharedPointer<Texture>& texture);
+	setTexture(const EngineUtilities::TSharedPointer<Texture>& texture);
+
+	std::string getName() { 
+		return m_name; 
+	}
 
 	/**
 	 * @brief Adds a component to the actor.

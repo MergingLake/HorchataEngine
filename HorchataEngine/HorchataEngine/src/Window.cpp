@@ -1,4 +1,5 @@
 #include <window.h>
+#include <EngineGUI.h>
 
 Window::Window(int width, int height, const std::string& title) {
 	// Create a new SFML RenderWindow with the specified dimensions and title
@@ -16,25 +17,18 @@ Window::Window(int width, int height, const std::string& title) {
   else {
     ERROR("Window", "Window", "Failed to create window");
   }
-
-	ImGui::SFML::Init(*m_windowPtr); // Initialize ImGui with the window
 }
 
 Window::~Window() {
-  ImGui::SFML::Shutdown(); // Shutdown ImGui before destroying the window
-	// Release the unique pointer to the window
-	m_windowPtr.release();
-  //SAFE_PTR_RELEASE(m_window);
+  m_windowPtr.release();
 }
 
 void
-Window::handleEvents() {
-  //while (m_windowPtr->isOpen())
-  //{
-  //}
-	// Process events in the window
+Window::handleEvents(EngineGUI& engineGUI) {
+
   while (const std::optional event = m_windowPtr->pollEvent()) {
-    ImGui::SFML::ProcessEvent(*m_windowPtr, *event);
+		engineGUI.processEvent(*m_windowPtr, *event);
+    //ImGui::SFML::ProcessEvent(*m_windowPtr, *event);
     // Close window: exit
     if (event->is<sf::Event::Closed>())
 			m_windowPtr->close();
@@ -87,17 +81,17 @@ Window::update() {
 	deltaTime = clock.restart(); // Restart the clock and get the elapsed time
   
 	// Use these deltaTime to update ImGui
-  ImGui::SFML::Update(*m_windowPtr, deltaTime);
+  //ImGui::SFML::Update(*m_windowPtr, deltaTime);
 }
 
 void
 Window::render() {
-	ImGui::SFML::Render(*m_windowPtr); // Render ImGui draw data
+	//ImGui::SFML::Render(*m_windowPtr); // Render ImGui draw data
 }
 
 void
 Window::destroy() {
-	ImGui::SFML::Shutdown(); // Shutdown ImGui before destroying the window
+	//ImGui::SFML::Shutdown(); // Shutdown ImGui before destroying the window
   m_windowPtr.release();
   //SAFE_PTR_RELEASE(m_window);
 }

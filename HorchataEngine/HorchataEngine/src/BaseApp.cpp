@@ -11,7 +11,7 @@ BaseApp::run() {
   }
 
   while (m_windowPtr->isOpen()) {
-    m_windowPtr->handleEvents();
+    m_windowPtr->handleEvents(m_engineGUI);
     update();
     render();
   }
@@ -32,95 +32,134 @@ BaseApp::init() {
     return false;
 	}
 
-  m_waypoints = {
-    EngineMath::Vector2(510.f, 22.f),
-    EngineMath::Vector2(1190.f, 22.f),
-    EngineMath::Vector2(1190.f, 400.f),
-    EngineMath::Vector2(750.f, 400.f),
+	m_engineGUI.init(m_windowPtr);
+
+	m_waypoints = {
+		EngineMath::Vector2(510.f, 22.f),
+		EngineMath::Vector2(850.f, 22.f),
+		EngineMath::Vector2(1190.f, 22.f),
+		EngineMath::Vector2(1190.f, 200.f),
+		EngineMath::Vector2(1190.f, 400.f),
+		EngineMath::Vector2(1050.f, 400.f),
+		EngineMath::Vector2(900.f, 400.f),
+		EngineMath::Vector2(750.f, 400.f),
+		EngineMath::Vector2(750.f, 525.f),
 		EngineMath::Vector2(750.f, 625.f),
+		EngineMath::Vector2(1050.f, 625.f),
 		EngineMath::Vector2(1375.f, 625.f),
+		EngineMath::Vector2(1375.f, 750.f),
 		EngineMath::Vector2(1375.f, 875.f),
+		EngineMath::Vector2(1150.f, 875.f),
 		EngineMath::Vector2(950.f, 875.f),
 		EngineMath::Vector2(900.f, 825.f),
 		EngineMath::Vector2(700.f, 825.f),
 		EngineMath::Vector2(650.f, 875.f),
 		EngineMath::Vector2(510.f, 875.f),
+		EngineMath::Vector2(510.f, 700.f),
 		EngineMath::Vector2(510.f, 500.f),
-  };
+	};
 
-  m_currentWaypoint = 0;
+	m_Aplayer = EngineUtilities::MakeShared<APlayer>("Player");
+	if (m_Aplayer) {
+		m_Aplayer->getComponent<CShape>()->createShape(ShapeType::RECTANGLE);
+		m_Aplayer->getComponent<CShape>()->setFillColor(sf::Color::White);
+		m_Aplayer->getComponent<Transform>()->setPosition(m_waypoints.back());
+		m_Aplayer->getComponent<Transform>()->setScale(EngineMath::Vector2(1.f, 2.f) / 3.f);
 
-	// create circle actor
-	m_ACircle = EngineUtilities::MakeShared<Actor>("Player Actor");
-  if(m_ACircle) {
-		m_ACircle->getComponent<CShape>()->createShape(ShapeType::RECTANGLE);
-		m_ACircle->getComponent<CShape>()->setFillColor(sf::Color::White);
-		m_ACircle->getComponent<Transform>()->setPosition(EngineMath::Vector2(510.f, 500.f));
-		m_ACircle->getComponent<Transform>()->setScale(EngineMath::Vector2(1.f, 2.f));
-		//m_ACircle->setName("CircleActor");
-
-    if(!resourceMan.loadTexture("Sprites/Mario", "png")) {
-      MESSAGE("BaseApp","init","Can't load the texture");
+		if (!resourceMan.loadTexture("Sprites/Mario", "png")) {
+			MESSAGE("BaseApp", "init", "Can't load the texture");
 		}
-    m_ACircle->setTexture(resourceMan.getTexture("Sprites/Mario"));
+		m_Aplayer->setTexture(resourceMan.getTexture("Sprites/Mario"));
+		m_actors.push_back(m_Aplayer);
 	}
-  else {
-    ERROR("BaseApp",
-      "init",
-      "Failed to create Circle Actor, check memory allocation");
-    return false;
-  }
+	else {
+		ERROR("BaseApp", "init", "Failed to create Player Actor, check memory allocation");
+		return false;
+	}
+
+	const std::vector<std::string> botTextures = {
+			"Sprites/Luigi",
+			"Sprites/Luigi",
+			"Sprites/Luigi",
+			"Sprites/Luigi",
+			"Sprites/Luigi"
+	};
+
+	for (int i = 0; i < 5; ++i) {
+		EngineUtilities::TSharedPointer<ARacer> racer = EngineUtilities::MakeShared<ARacer>("Bot " + std::to_string(i + 1));
+		if (racer) {
+			racer->getComponent<CShape>()->createShape(ShapeType::RECTANGLE);
+			racer->getComponent<CShape>()->setFillColor(sf::Color::White); // Rojo semi-transparente
+			racer->getComponent<Transform>()->setPosition(m_waypoints.back() - EngineMath::Vector2(0, (i + 1) * 30.f));
+			racer->getComponent<Transform>()->setScale(EngineMath::Vector2(1.f, 2.f) / 3.f);
+
+			// Cargar y asignar textura única para cada bot
+			if (!resourceMan.loadTexture(botTextures[i], "png")) {
+				MESSAGE("BaseApp", "init", "Can't load the bot texture: " + botTextures[i]);
+			}
+			racer->setTexture(resourceMan.getTexture(botTextures[i]));
+
+			// Añade el Steering Behavior de PathFollowing
+			racer->addSteeringBehavior(EngineUtilities::MakeShared<PathFollowing>(m_waypoints));
+
+			m_Aracers.push_back(racer);
+			m_actors.push_back(racer);
+		}
+		else {
+			ERROR("BaseApp", "init", "Failed to create Racer Actor, check memory allocation");
+			return false;
+		}
+	}
 
 	m_ATrack = EngineUtilities::MakeShared<Actor>("Track Actor");
-  if (m_ATrack) {
-    m_ATrack->getComponent<CShape>()->createShape(ShapeType::RECTANGLE);
-    m_ATrack->getComponent<CShape>()->setFillColor(sf::Color::White);
-    m_ATrack->getComponent<Transform>()->setPosition(EngineMath::Vector2(500.f, 50.f));
-    m_ATrack->getComponent<Transform>()->setScale(EngineMath::Vector2(10.f, 20.f));
+	if (m_ATrack) {
+		m_ATrack->getComponent<CShape>()->createShape(ShapeType::RECTANGLE);
+		m_ATrack->getComponent<CShape>()->setFillColor(sf::Color::White);
+		m_ATrack->getComponent<Transform>()->setPosition(EngineMath::Vector2(500.f, 50.f));
+		m_ATrack->getComponent<Transform>()->setScale(EngineMath::Vector2(10.f, 20.f));
 
-    if(!resourceMan.loadTexture("Sprites/Rainbow_Road", "png")) {
-      MESSAGE("BaseApp", "init", "Can't load the texture");
+		if (!resourceMan.loadTexture("Sprites/Rainbow_Road", "png")) {
+			MESSAGE("BaseApp", "init", "Can't load the texture");
 		}
-    m_ATrack->setTexture(resourceMan.getTexture("Sprites/Rainbow_Road"));
-  }
-  else {
-    ERROR("BaseApp",
-      "init",
-      "Failed to create Track Actor, check memory allocation");
-    return false;
-  }
+		m_ATrack->setTexture(resourceMan.getTexture("Sprites/Rainbow_Road"));
+		m_actors.push_back(m_ATrack);
+	}
+	else {
+		ERROR("BaseApp", "init", "Failed to create Track Actor, check memory allocation");
+		return false;
+	}
 
-  return true;
+	m_gameManager = EngineUtilities::MakeShared<GameManager>();
+	if (m_gameManager) {
+		m_gameManager->init(m_ATrack, m_waypoints);
+	}
+	else {
+		ERROR("BaseApp", "init", "Failed to create GameManager, check memory allocation");
+		return false;
+	}
+
+	return true;
 }
 
 void
 BaseApp::update() {
   if (!m_windowPtr.isNull()) {
-    m_windowPtr->update();
-  }
-  ImGui::ShowDemoWindow();
+		m_windowPtr->update();
+	}
+	
+	// Actualizar el game manager y los actores
+	m_gameManager->update(m_windowPtr->deltaTime.asSeconds(), m_Aracers, m_Aplayer);
 
-  if (!m_ACircle.isNull() && !m_waypoints.empty()) {
-    m_ACircle->update(m_windowPtr->deltaTime.asSeconds());
-
-  if(!m_ATrack.isNull()) {
-      m_ATrack->update(m_windowPtr->deltaTime.asSeconds());
+	for (const auto& actor : m_actors) {
+		if (actor) {
+			actor->update(m_windowPtr->deltaTime.asSeconds());
+		}
 	}
 
-    // Get current target waypoint
-    EngineMath::Vector2 targetPos = m_waypoints[m_currentWaypoint];
-
-    // Move towards the current waypoint
-    m_ACircle->getComponent<Transform>()->seek(
-      targetPos, 200.f, m_windowPtr->deltaTime.asSeconds(), 10.f);
-
-    // Check if close enough to the waypoint to advance
-    EngineMath::Vector2 currentPos = m_ACircle->getComponent<Transform>()->getPosition();
-    float distance = EngineMath::Vector2::distance(currentPos, targetPos);
-    if (distance < 10.f && m_currentWaypoint < 12) {
-      m_currentWaypoint = (m_currentWaypoint + 1); // Loop waypoints
-    }
-  }
+	m_engineGUI.update(m_windowPtr, m_windowPtr->deltaTime);
+	m_engineGUI.outliner(m_actors);
+	m_engineGUI.inspector(m_actors);
+	//ImGui::ShowDemoWindow();
 }
 
 void
@@ -136,16 +175,26 @@ BaseApp::render() {
     m_ATrack->getComponent<CShape>()->render(m_windowPtr);
 	}
 
-  if (!m_ACircle.isNull()) {
-		m_ACircle->getComponent<CShape>()->render(m_windowPtr);
-  }
+	if (!m_Aplayer.isNull()) {
+		m_Aplayer->getComponent<CShape>()->render(m_windowPtr);
+	}
 
+	for (const auto& racer : m_Aracers) {
+		if (!racer.isNull()) {
+			racer->getComponent<CShape>()->render(m_windowPtr);
+		}
+	}
+
+	m_gameManager->renderHUD(m_windowPtr);
 	m_windowPtr->render();
+  m_engineGUI.render(m_windowPtr);
   m_windowPtr->display();
 }
 
 void
 BaseApp::destroy() {
+
+  m_engineGUI.destroy();
 	//m_shapePtr.reset(); // Release the shape pointer
   //m_window->destroy();
 }

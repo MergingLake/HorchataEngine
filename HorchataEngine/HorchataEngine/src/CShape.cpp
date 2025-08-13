@@ -96,8 +96,8 @@ CShape::setFillColor(const sf::Color& color) {
 }
 
 void
-CShape::setRotation(float angle) {
-  if (m_shapePtr) m_shapePtr->setRotation(sf::degrees(angle));
+CShape::setRotation(const EngineMath::Vector2& rot) {
+  if (m_shapePtr) m_shapePtr->setRotation(sf::degrees(rot.x));
   else ERROR("CShape", "setRotation", "Shape no inicializado");
 }
 

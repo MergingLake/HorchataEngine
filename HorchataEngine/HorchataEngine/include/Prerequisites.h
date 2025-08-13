@@ -90,3 +90,10 @@ enum ShapeType {
   TRIANGLE = 3, /**< Triangle shape (custom polygon). */
   POLYGON = 4  /**< Arbitrary polygon shape.         */
 };
+
+enum 
+ConsolErrorType {
+  INFO = 0,
+  WARNING = 1,
+  ERROR = 2
+};

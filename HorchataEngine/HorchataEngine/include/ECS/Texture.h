@@ -3,7 +3,7 @@
 #include "Component.h"
 
 class
-	Texture : public Component {
+Texture : public Component {
 public:
 	Texture() = default;
 

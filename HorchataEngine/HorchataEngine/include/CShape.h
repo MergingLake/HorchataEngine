@@ -90,7 +90,7 @@ public:
    * @param angle Rotation angle in degrees.
    */
   void
-    setRotation(float angle);
+    setRotation(const EngineMath::Vector2& rot);
 
   /**
    * @brief Sets the scale of the shape.

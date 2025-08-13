@@ -11,31 +11,33 @@ public:
 	 */
 	Transform() : Component(ComponentType::TRANSFORM),
 								m_position(0.0f, 0.0f),
-								m_rotation(0.0f),
-								m_scale(1.0f, 1.0f) {}
-	
+								m_rotation(0.0f, 0.0f),
+								m_scale(1.0f, 1.0f),
+								m_origin(0.0f, 0.0f),
+								m_globalBounds(sf::FloatRect(sf::Vector2f(0, 0), sf::Vector2f(0, 0))) {}
+
 	/**
-	 * @brief Default destructor.
-	 */
+  * @brief Default destructor.
+  */
 	virtual ~Transform() = default;
-	
+
 	/**
-	 * @brief Initializes the transform component.
-	 */
+  * @brief Initializes the transform component.
+  */
 	void
 		beginplay() override {}
-	
+
 	/**
-	 * @brief Updates the transform component.
-	 * @param deltaTime Time since the last frame.
-	 */
+  * @brief Updates the transform component.
+  * @param deltaTime Time since the last frame.
+  */
 	void
 		update(float deltaTime) override {}
-	
+
 	/**
-	 * @brief Renders the transform component.
-	 * @param window The window to render to.
-	 */
+  * @brief Renders the transform component.
+  * @param window The window to render to.
+  */
 	void
 	render(const EngineUtilities::TSharedPointer<Window>& window) override {}
 
@@ -83,7 +85,7 @@ public:
 	 * @param rotation The new rotation angle in degrees.
 	 */
 	void
-	setRotation(float rotation) {
+	setRotation(EngineMath::Vector2& rotation) {
 			m_rotation = rotation;
 	}
 	
@@ -91,7 +93,7 @@ public:
 	 * @brief Gets the rotation of the transform.
 	 * @return The current rotation angle in degrees.
 	 */
-	float
+	EngineMath::Vector2&
 		getRotation() {
 			return m_rotation;
 	}
@@ -114,9 +116,62 @@ public:
 			return m_scale;
 	}
 
+	/**
+  * @brief Sets the origin of the transform.
+  * @param origin The new origin.
+  */
+	void
+		setOrigin(const EngineMath::Vector2& origin) {
+			m_origin = origin;
+	}
+
+	/**
+  * @brief Gets the origin of the transform.
+  * @return The current origin.
+  */
+	EngineMath::Vector2&
+		getOrigin() {
+			return m_origin;
+	}
+
+	/**
+  * @brief Sets the global bounds of the transform.
+  * @param bounds The new global bounds.
+  */
+	void
+		setGlobalBounds(const sf::IntRect& bounds) {
+			m_globalBounds = bounds;
+	}
+
+	/**
+  * @brief Gets the global bounds of the transform.
+  * @return The current global bounds.
+  */
+	const sf::IntRect&
+		getGlobalBounds() const {
+			return m_globalBounds;
+	}
+
+	//float*
+		//getPosData() {
+		//return &m_position.x;
+	//}
+
+	//float*
+		//getRotData() {
+		//return &m_rotation;
+	//}
+
+	//float*
+		//getScaData() {
+		//return &m_scale.x;
+	//}
+
 private:
-	  /**< Position of the transform. */
+   /**< Position of the transform. */
 		EngineMath::Vector2 m_position; /**< Position of the transform. */
-		float m_rotation; /**< Rotation angle in degrees. */
+		EngineMath::Vector2 m_rotation; /**< Rotation angle in degrees. */
 		EngineMath::Vector2 m_scale; /**< Scale factor for the transform. */
+		EngineMath::Vector2 m_origin; /**< Origin of the transform. */
+		sf::IntRect m_globalBounds; /**< Global bounds of the transform. */
 };

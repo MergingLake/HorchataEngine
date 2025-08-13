@@ -1,6 +1,8 @@
 #pragma once
 #include "Prerequisites.h"
 
+class EngineGUI;
+
 /**
  * @class Window
  * @brief Wrapper class for managing an SFML RenderWindow.
@@ -32,7 +34,7 @@ public:
    * @brief Handles window events (input, close, etc.).
    */
   void
-    handleEvents();
+    handleEvents(EngineGUI& engineGUI);
 
   /**
    * @brief Checks if the window is still open.
@@ -79,10 +81,10 @@ public:
     destroy();
 
 private:
-	EngineUtilities::TUniquePtr<sf::RenderWindow> m_windowPtr; /**< Unique pointer to the SFML RenderWindow. */
   //sf::RenderWindow* m_window; /**< Pointer to the SFML RenderWindow. */
 	sf::View m_view; /**< View for rendering, can be used for camera control. */
 public:
+  EngineUtilities::TUniquePtr<sf::RenderWindow> m_windowPtr; /**< Unique pointer to the SFML RenderWindow. */
 	sf::Time deltaTime; /**< Time elapsed since the last frame, useful for frame rate independent updates. */
 	sf::Clock clock; /**< Clock to measure time between frames. */
 };

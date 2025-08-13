@@ -3,6 +3,11 @@
 #include "Window.h"
 #include "CShape.h"
 #include "ECS/Actor.h"
+#include "ECS/APlayer.h"
+#include "ECS/ARacer.h"
+#include "EngineGUI.h"
+#include "GameManager.h"
+#include "SteeringBehaviors.h"
 
 /**
  * @class BaseApp
@@ -57,13 +62,16 @@ public:
     destroy();
 
 private:
-	EngineUtilities::TSharedPointer<Window> m_windowPtr;
+	std::vector<EngineUtilities::TSharedPointer<Actor>> m_actors; /**< Vector of actors in the scene. */
+	
+  EngineUtilities::TSharedPointer<Window> m_windowPtr;
 
-	EngineUtilities::TSharedPointer<Actor> m_ACircle; /**< Pointer to the actor component for managing entities. */
+	EngineUtilities::TSharedPointer<APlayer> m_Aplayer; /**< Pointer to the actor component for managing entities. */
 	EngineUtilities::TSharedPointer<Actor> m_ATrack; /**< Pointer to the circle shape component for rendering. */
-  //Window* m_window;  /**< Pointer to the application window wrapper. */
-  //sf::CircleShape* m_circle; /**< Pointer to the circle shape for rendering.  */
+	std::vector<EngineUtilities::TSharedPointer<ARacer>> m_Aracers; /**< Vector of AI racers in the game. */
 
+	EngineUtilities::TSharedPointer<GameManager> m_gameManager; /**< Pointer to the GameManager for high-level game logic. */
   std::vector<EngineMath::Vector2> m_waypoints;
-  size_t m_currentWaypoint;
+
+	EngineGUI m_engineGUI; /**< Instance of the EngineGUI for rendering ImGui elements. */
 };
